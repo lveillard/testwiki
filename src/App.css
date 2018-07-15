@@ -1,25 +1,49 @@
 .App {
-  text-align: center;
-
+  background-color: #fbfbfb;
+  height: 100vh;
 }
 
 .App-header {
   background-color: #2980b9;
   height: 80px;
-  padding: 20px;
   color: white;
+  z-index: 1031;
+
 }
 
 .Header-sub {
-  background-color: #EEE;
-  height: 40px;
+  background-color: #f6f7f8;
+  border-bottom: 1px solid #dee5e8;
+  height: 47px;
   color: #555;
+  position: fixed;
+  top: 56px;
+  right: 0;
+  left: 0;
+  z-index: 1029;
+}
+
+.Footer-top {
+  background-color: #f6f7f8;
+  border-top: 1px solid #dee5e8;
+  position: fixed;
+  top: 85%;
+  right: 0;
+  left: 0;
+  z-index: -2000;
+
+}
+
+.Footer-top {
+  background-color: #f6f7f8;
+  border-top: 1px solid #dee5e8;
+
 }
 
 
 .App-main {
-  padding: 20px;
-  padding-bottom: 20%;
+  margin-top: 56px;
+
 }
 
 .App-title {
@@ -30,13 +54,20 @@
   font-size: large;
 }
 
-.App-footer{
-  background: #AAA;
-  color: white;
-  height: 70px;
-  }
+.quill {
+padding-bottom: 30px;
+}
+.ql-container {
+  padding-bottom: 30px;
+}
+
+.hover-azul:hover{
+  background-color: rgb(41, 128, 185) !important;
+  color: white !important;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+

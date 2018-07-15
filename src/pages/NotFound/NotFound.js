@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
-
-
-import './NotFound.css';
+import './NotFound.css'
 
 class NotFound extends Component {
   render() {
     return (
-     <Container>
       <div className="NotFound">
+     <Container className="RowMain">
+      <div>
         <h1>Error 155</h1>
 
         <Alert color="danger">
@@ -18,6 +17,7 @@ class NotFound extends Component {
 
       </div>
       </Container>
+      </div>
     );
   }
 }

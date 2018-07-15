@@ -31,7 +31,7 @@ export default class  extends React.Component {
   render() {
     return (
       <div>
-        <Navbar dark expand="sm">
+        <Navbar className="fixed-top" dark expand="sm">
           <NavbarBrand href="/">Wiki</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
