@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import './Login.css';
 
 class login extends Component {
   render() {
     return (
+  <div className="App-Login">
+    <Container>   
 
-    <container>   
-
-      <div className="col-md-12 col-sm-12">
+      <Row className="col-md-12 col-sm-12">
+        <Col>
         <h3>Login</h3>
           <form>
         <div className="col-sm-12 form-group">
@@ -20,9 +23,11 @@ class login extends Component {
           <Button color="danger" onClick={this.handleSubmit} className="btn btn-default btn-block btn-lg">Sign in</Button>
         </div>
       </form>
-</div>
+      </Col>
+</Row>
 
-    </container>    
+    </Container> 
+    </div>   
 
         
     );

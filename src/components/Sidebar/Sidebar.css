@@ -1,0 +1,58 @@
+.Side h2, h3, h4 {
+    text-align: center;
+  }
+
+  .Side h4 {
+    padding: 0 9px;
+    margin-bottom: 10px;
+    color: #7d7f7f;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .5px;
+    
+    }
+
+    .Side ul {
+    list-style: none;
+    color: rgb(80, 80, 80);
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0;
+}
+      
+    
+    .Side ul a{
+    display: block;     
+    width: 100%;
+    font-size: 14px;
+    padding: 5px 9px 3px 7px;
+    cursor: pointer;
+    text-align: left;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Side ul a:hover{
+  background-color: #e5eaf0;
+  color: black;
+
+}
+
+.Side ul a:active{
+  background-color: #2980b9;
+  color: white !important;
+
+}
+
+.floater {
+  float: right;
+  margin-top: 4px;
+  margin-left: 5px;
+  transform: scale(1.2);
+
+    }
