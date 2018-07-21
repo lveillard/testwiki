@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem } from 'reactstrap';
 import {Link} from 'react-router-dom';
-import './NavBar.css';
+import './Header.css';
 
 export default class  extends React.Component {
   constructor(props) {
@@ -30,9 +30,13 @@ export default class  extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Navbar className="fixed-top" dark expand="sm">
-          <NavbarBrand href="/">Wiki</NavbarBrand>
+
+
+
+			
+        <Navbar className="fixed-top " dark expand="sm" style={{height: "56px"}} >
+          <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1100px",margin:"auto"}}>
+          <NavbarBrand className="pl-3" href="/">Test-wiki</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -61,8 +65,9 @@ export default class  extends React.Component {
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
+          </Navbar>
         </Navbar>
-      </div>
+
     );
   }
 }

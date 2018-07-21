@@ -1,7 +1,27 @@
 .RowMain {
-    height: calc(100vh - 180px);
+    /*height: calc(100vh - 180px); con footer*/
+    height: calc(100vh - 120px);
     max-width: 100% !important;
 
+  }
+
+  .custom-scrollbars .track{
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  
+  .custom-scrollbars:hover .track{
+    opacity: 1;
+  }
+
+  .testtest{
+    opacity:1;
+  
+  }
+
+  .testtest2{
+    opacity:0;
+  
   }
 
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 
+
 class ShadowScrollbars extends Component {
 
     constructor(props, ...rest) {
@@ -51,6 +52,9 @@ class ShadowScrollbars extends Component {
         return (
             <div style={containerStyle}>
                 <Scrollbars
+                    autoHide
+                    autoHideTimeout={300}
+                    autoHideDuration={1000}
                     ref="scrollbars"
                     onUpdate={this.handleUpdate}
                     {...props}/>

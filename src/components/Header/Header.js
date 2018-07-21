@@ -14,10 +14,11 @@ import {
   DropdownItem } from 'reactstrap';
 import NavBar from './NavBar';
 
+
 class Header extends Component {
   render() {
     return (
-      <div className="NavBar">
+      <div className="NavBar bb ">
       <NavBar />
       </div>
     );

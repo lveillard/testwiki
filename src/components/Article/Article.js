@@ -18,7 +18,7 @@ class Article extends Component {
     {/* el false ese es temporal */}
 
     return (
-      				<Container style={{paddingRight: "25px",paddingLeft: "25px",paddingTop: "25px",backgroundColor: "white"}}><Row><Col>
+      				<Container style={{paddingRight: "25px",paddingLeft: "25px",backgroundColor: "white"}}><Row><Col>
 
       <div className="App-Article">
       {
@@ -37,7 +37,7 @@ class Article extends Component {
       </div>
       </Container>
 
-      <div className="article-content mt-3">
+      <div className="article-content mt-3 px-5 py-3">
         
 ¿De dónde viene?
 
