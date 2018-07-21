@@ -45,7 +45,7 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			articles: [],
-			loading: true
+			loading: true,
 			};
 }
 
@@ -58,10 +58,10 @@ class Main extends Component {
 <div className="Main">
 	<Container style={{maxWidth: "1100px", padding: "0"}}>
 		<Row className= "RowMain" > 
-			{false ? null :
+			{this.props.hiddenSidebar ? null :
 			<Col 
 			sm={{size:"3"}} 
-			className="d-none d-sm-block" 
+			className="d-none d-sm-block testtest" 
 			style={{
 				padding: "0px",
 				backgroundColor: "white"
@@ -75,59 +75,16 @@ class Main extends Component {
 			}
 			
 			
-			<Col style={{padding:"0"}}>
+			<Col>
 			<ShadowScrollbars style={{height:"100%"}}>
+
 			<Article />
 			</ShadowScrollbars>
 			</Col>
-			{/*
-			<div class="col-lg-3" style={{ position: "fixed", height:"100%",overflowY:"auto"}}>
-			
-			</div>
-			<div class="col-lg-9 col-lg-offset-3">
-					Normal scrollable content
-			</div>*/}
 
 			</Row>
 	</Container>
-			{/*
 			
-				
-				<div style={divStyle} className="sidebar">
-				<h4>Categoria 1</h4>
-							<li>Artículo 1</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2 que es super largo y tal y cual pascual</li>
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-				</div>
-
-				<section style={mainStyle}>
-				<Container >
-					<Row style={mainRow}>
-						<Col>
-							<Article />
-						</Col>
-						<Col xs="2">
-							sidebar-r
-						</Col>
-					</Row>
-					<Row>
-					<Col className="App-footer">
-				<Footer />
-				</Col>
-				</Row>
-				</Container>
-				</section>
-*/}
 </div>
 
 		);

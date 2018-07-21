@@ -1,0 +1,33 @@
+.navbar {
+    background-color: #2e66cf;
+    border-color: #E7E7E7;
+}
+
+.button-nav-main {
+    background-color: transparent !important;
+    color: white !important;
+    background-color: #2e66cf !important;
+    border: 0px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+
+}
+
+.button-nav-main:hover {
+    background-color: transparent !important;
+    color: white !important;
+    background-color: #007bff !important;
+    border: 0px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+
+}
+
+.button-nav {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #007bff !important;
+    border: 0px !important;
+    font-size: 1rem !important;
+
+}
