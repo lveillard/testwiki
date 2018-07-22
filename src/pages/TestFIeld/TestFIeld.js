@@ -4,6 +4,8 @@ import Loader from '../../components/Loader/Loader';
 import CKEditor from "react-ckeditor-component";
 import Qeditor from '../../components/Qeditor/Qeditor';
 import {Link} from 'react-router-dom';
+import Scrollbars from 'react-custom-scrollbars';
+
 
 
 class TestField extends Component {

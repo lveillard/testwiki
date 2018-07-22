@@ -43,11 +43,14 @@ class Main extends Component {
 
 	constructor(props) {
 		super(props);
+		console.log("props"+ this.props)
 		this.state = {
 			articles: [],
-			loading: true
+			loading: true,
+			articleID: "",
 			};
 }
+
 
 
 
@@ -56,78 +59,36 @@ class Main extends Component {
 
 		return (
 <div className="Main">
-	<Container style={{maxWidth: "1100px", padding: "0"}}>
+	<Container style={{maxWidth: "1400px", padding: "0"}}>
 		<Row className= "RowMain" > 
-			{false ? null :
+			{this.props.hiddenSidebar ? null :
 			<Col 
-			sm={{size:"3"}} 
-			className="d-none d-sm-block" 
+			sm={{size:"3"}} xl="2"
+			className="d-none d-sm-block testtest" 
 			style={{
 				padding: "0px",
 				backgroundColor: "white"
 				}}
 			>
 			<ShadowScrollbars style={{height:"100%"}}>
-			<SideBar />
+			<SideBar clickedArticle={this.props.changeArticle} />
 			</ShadowScrollbars>
 
 			</Col> 
 			}
 			
 			
-			<Col style={{padding:"0"}}>
-			<ShadowScrollbars style={{height:"100%"}}>
-			<Article />
+			<Col>
+			<ShadowScrollbars style={{height:"100%"}} >
+
+			<Article activeArticle={this.props.activeArticle}/>
 			</ShadowScrollbars>
 			</Col>
-			{/*
-			<div class="col-lg-3" style={{ position: "fixed", height:"100%",overflowY:"auto"}}>
-			
-			</div>
-			<div class="col-lg-9 col-lg-offset-3">
-					Normal scrollable content
-			</div>*/}
+			<Col xl="2" className="sidebar-R bw d-none d-xl-block" ></Col>
 
 			</Row>
 	</Container>
-			{/*
 			
-				
-				<div style={divStyle} className="sidebar">
-				<h4>Categoria 1</h4>
-							<li>Artículo 1</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2 que es super largo y tal y cual pascual</li>
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-							<h4>Categoria 2</h4>
-							<li>Artículo 2</li>
-
-				</div>
-
-				<section style={mainStyle}>
-				<Container >
-					<Row style={mainRow}>
-						<Col>
-							<Article />
-						</Col>
-						<Col xs="2">
-							sidebar-r
-						</Col>
-					</Row>
-					<Row>
-					<Col className="App-footer">
-				<Footer />
-				</Col>
-				</Row>
-				</Container>
-				</section>
-*/}
 </div>
 
 		);

@@ -1,0 +1,74 @@
+.navbar {
+    background-color: #2e66cf;
+    border-color: #E7E7E7;
+    height: 60px;
+}
+
+.button-nav-main {
+    color: white !important;
+    background-color: #2e66cf !important;
+    border: 0px  !important;
+    font-size: 1rem !important;
+    font-weight: 550 !important;
+    opacity: 0.7;
+    padding: 11px !important;
+    padding-left: 42px !important;
+    padding-right: 42px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+
+}
+
+.button-nav-main:hover {
+    color:  white !important;
+    background-color: #2e66cf !important;
+    border: 0px  !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    opacity: 0.6;
+    padding: 11px !important;
+    padding-left: 42px !important;
+    padding-right: 42px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+
+
+}
+
+.button-nav-main:focus {
+    color:  white !important;
+    padding: 11px !important;
+    padding-left: 42px !important;
+    padding-right: 42px !important;
+    background-color: #2e66cf !important;
+    border-color: white  !important;
+
+
+}
+
+.button-nav {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #007bff !important;
+    border: 0px !important;
+    font-size: 1rem !important;
+    height: 100%;
+
+
+
+
+
+
+}
+
+.button-nav:hover {
+    background-color: white !important;
+    border-color: black !important;
+    color: #007bff !important;
+    border: 1px 1px 1px 1px!important;
+    font-size: 1rem !important;
+    box-shadow: 0px 0px #fff,0 0 0 1px #b6c5cc !important;
+    border-radius: 2px 2px 2px 2px;
+    display: inline-block;
+
+}

@@ -28,7 +28,7 @@
     display: block;     
     width: 100%;
     font-size: 14px;
-    padding: 5px 9px 3px 7px;
+    padding: 5px 15px 3px 16px;
     cursor: pointer;
     text-align: left;
 
@@ -44,7 +44,7 @@
 }
 
 .Side ul a:active{
-  background-color: #2980b9;
+  background-color: #2e66cf;
   color: white !important;
 
 }

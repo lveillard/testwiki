@@ -4,9 +4,7 @@
 }
 
 .App-header {
-  background-color: #2980b9;
-  height: 80px;
-  color: white;
+  background-color: #2e66cf;
   z-index: 1031;
 
 }
@@ -14,13 +12,17 @@
 .Header-sub {
   background-color: #f6f7f8;
   border-bottom: 1px solid #dee5e8;
-  height: 47px;
   color: #555;
   position: fixed;
-  top: 56px;
+  top: 60px;
   right: 0;
   left: 0;
   z-index: 1029;
+}
+
+.sidebar-R {
+  background-color: white !important;
+
 }
 
 .Footer-top {
@@ -42,7 +44,7 @@
 
 
 .App-main {
-  margin-top: 56px;
+  margin-top: 47px;
 
 }
 
@@ -62,9 +64,49 @@ padding-bottom: 30px;
 }
 
 .hover-azul:hover{
-  background-color: rgb(41, 128, 185) !important;
+  background-color: #2e66cf !important;
   color: white !important;
 }
+
+.consola {
+  background-color: rgb(34, 34, 34) !important;
+  color: rgb(180, 154, 69) !important;
+  height: 21px;
+
+}
+
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  
+}
+
+.container {
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+
+.col {
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+
+.bb {
+  background-color: #2e66cf !important;
+}
+
+.bb {
+  background-color: #f6f7f8 !important;
+}
+
+.bw {
+  background-color: white !important;
+}
+
+
+
+
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
