@@ -24,12 +24,12 @@ class SideBar extends Component {
 		}
 
   render() {
-
-	const listItems =  articleList.filter((x)=> x.grupo==catList[1].id).map(x=> <li>
+   
+	const listItems =  this.props.articulos.map(x=> <li>
 						<a className= "hover-azul">
 						<FontAwesomeIcon  className="floater" icon="angle-right" />
 
-		{x.titulo}
+		{x.Titulo}
 								</a>
 
 		</li>)		
@@ -48,6 +48,19 @@ class SideBar extends Component {
 		
 		}</ul></div>)
 
+const pruebas =  this.props.categorias.map(y=> <div key={y.id}><h4>{y.Nombre}</h4> <ul>{
+		
+	this.props.articulos.filter((x)=> x.Categoria==y.id).map(x=> <li key={x.id} onClick={() => this.clickedArticle(x.id)} >
+					<a className= "hover-azul">
+					<FontAwesomeIcon  className="floater" icon="angle-right" />
+
+	{x.Titulo}
+							</a>
+
+	</li>)
+	
+	}</ul></div>)
+
     return (
 				<Container >
 					<Row className="RowMain">
@@ -59,8 +72,10 @@ class SideBar extends Component {
 
 				<section className="Side" style={{overflow: "hidden",
 				}}> 
+				{pruebas}
 				{prueba }
 				{prueba }
+				
 
 
 				</section>

@@ -71,7 +71,7 @@ class Main extends Component {
 				}}
 			>
 			<ShadowScrollbars style={{height:"100%"}}>
-			<SideBar clickedArticle={this.props.changeArticle} />
+			<SideBar clickedArticle={this.props.changeArticle} categorias={this.props.categorias} articulos={this.props.articulos} />
 			</ShadowScrollbars>
 
 			</Col> 

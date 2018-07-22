@@ -48,7 +48,7 @@ class Article extends Component {
 
       <div className="article-content mt-3 px-4 py-3">
       
-      {this.props.activeArticle.content}
+      {this.props.activeArticle.Contenido}
         
       </div>
       </Container>

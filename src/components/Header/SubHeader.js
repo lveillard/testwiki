@@ -73,10 +73,10 @@ class SubHeader extends Component {
        
 
       </Nav>
-      <Nav className="ml-auto" navbar>
+      <Nav className="ml-auto d-none d-sm-block" navbar>
       <form className="form-inline  my-0 my-lg-0">
-          <Input className="form-control  mr-4" type="search" name="search" id="Buscador" placeholder="Search" className="d-none d-sm-block" />
-          <Button  style={{color:"#2980b9", borderColor:"#2980b9"}} className="hover-azul btn btn-outline-success my-2 pl-2 ml-2 d-none d-sm-block " type="submit"> Buscar </Button>
+          <Input className="form-control  mr-4" type="search" name="search" id="Buscador" placeholder="Search" />
+          <Button  style={{color:"#2980b9", borderColor:"#2980b9"}} className="hover-azul btn btn-outline-success my-2 pl-2 ml-2" type="submit"> Buscar </Button>
         </form>
    </Nav>
       </Navbar>

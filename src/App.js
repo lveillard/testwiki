@@ -22,8 +22,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {commands, commandoSelector} from './services/commands.js';
 import {catList,articleList} from './services/articuloObj';
+import { db } from './firebase'
 
-
+// https://joshpitzalis.svbtle.com/crud
+//https://engineering.flosports.tv/getting-started-with-firebase-firestore-7609e40606d8
 class App extends Component {
 
 	constructor(props) {
@@ -34,6 +36,7 @@ class App extends Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.runCommand = this.runCommand.bind(this);
 		this.setActiveArticle = this.setActiveArticle.bind(this);
+		this.updateCategories = this.updateCategories.bind(this);
 
 		this.state = {
 			activeArticle: articleList.filter((x)=> x.id==23240)[0],
@@ -41,18 +44,32 @@ class App extends Component {
 			comando: "",
 			hiddenSidebar: false,
 			debugger: true,
-			editor: false
+			editor: false,
+			categorias: [],
+			articulos: [],
+			test: "claro que si tete",
+			currentTeam: "vewwBiA8t8ReLvZ3kuYB",
+			test2: "holi"
 		};
 	}
 
-
+	
 	notify = () => toast("Wow so easy !");
 
 	toggleConsole(evt){
-		evt.preventDefault();
+		if (evt.preventDefault) {
+			evt.preventDefault();
+		} else {
+			// internet explorer
+			evt.returnValue = false;
+		}
 		console.log("consola abierta");
 		this.setState({consoleActive: !this.state.consoleActive	});
 		this.setState({comando: ""});
+	}
+	updateCategories(array){
+		console.log("a ver si funciona esta mierda");
+		this.setState({categorias: array});
 	}
 
 	toggleSidebar(onoff){this.setState({hiddenSidebar: onoff});}
@@ -80,6 +97,10 @@ class App extends Component {
 			this.toggleEditor(true);break;
 			case "view":
 			this.toggleEditor(false);break;
+			case "save":
+			toast("Guardado: " + this.state.activeArticle.id,{type: toast.TYPE.SUCCESS});break;
+			case "nuevotitulo":
+			this.updateArticleContent("");break;
 			default:
 			console.error("el comando \"" + comando + "\" no existe")
 		}
@@ -87,13 +108,12 @@ class App extends Component {
 
 	runCommand(){
 
-	const commands = ["sidebar:on", "sidebar:off", "notify", "id", "debug:on", "debug:off", "edit", "view"]
+	const commands = ["sidebar:on", "sidebar:off", "notify", "id", "debug:on", "debug:off", "edit", "view","save","nuevotitulo"]
 	!(commands.indexOf(this.state.comando) > -1)
 	? toast("⚠️ El comando \"" + this.state.comando + "\" no existe", {type: toast.TYPE.ERROR}) 
 	: (console.log("este comando existe"),this.commandSelector(this.state.comando))
 
 	}
-
 	handleInputChange(event) {
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -104,23 +124,112 @@ class App extends Component {
 		});
 	}
 
+	updateArticleContent(nuevoTitulo) {
+	console.log(this.state.activeArticle)
+	let jasper = Object.assign({}, this.state.activeArticle);    //creating copy of object
+	jasper.titulo = 'someothername';                               //updating value
+	this.setState({activeArticle: jasper});
+
+	}
+
 	setActiveArticle(articleID) {
-		this.setState({ activeArticle: articleList.filter((x)=> x.id==articleID)[0]	});
+		this.setState({ activeArticle: this.state.articulos.filter((x)=> x.id==articleID)[0]	});
 	}
 
 	handleKeyPress(evt){
-		// console.log(evt.charCode)
 		this.state.consoleActive && evt.charCode == "13" && (this.toggleConsole(evt), console.log(this.state.comando),this.runCommand());
+		//console.log(evt.charCode);
 	}
 
 	componentDidMount() {
+
+		var that = this;
+		//this.updateCategories(["pepe","loli"]);
 		Mousetrap.bind(['ctrl+k'], this.toggleConsole);
 		console.log(this.activeArticle)
 		
+		db
+		.doc('Teams/vewwBiA8t8ReLvZ3kuYB/Articulos/gWv1GOkvqLIdUkqZ8Age')
+		.get()
+		.then(doc => this.setState({ test: doc.data() }))
+
+		db.collection("Teams").where("Nombre", "==", "TestTeam")
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            console.log("Primer nivel"+doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+	});
+	
+	db.collection("Teams").doc("vewwBiA8t8ReLvZ3kuYB")
+	.collection("Articulos")
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            console.log("Segundo nivel"+doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+	});
+	
+	db.collection("Teams").doc("vewwBiA8t8ReLvZ3kuYB")
+    .onSnapshot(function(doc) {
+        console.log("Current data: ", doc.data());
+	});
+	
+	db.collection("Teams").doc("vewwBiA8t8ReLvZ3kuYB")
+	.collection("Articulos")
+    .onSnapshot(function(querySnapshot) {
+        var articulos = [];
+        querySnapshot.forEach(function(doc) {
+            articulos.push(doc.data().Titulo);
+        });
+        console.log("Lista de articulos en el equipo: ", articulos.join(", "));
+	});
+	
+	//esta es la buena para las categorias
+	db.collection("Teams").doc("vewwBiA8t8ReLvZ3kuYB")
+	.collection("Categorias")
+    .onSnapshot(function(querySnapshot) {
+		var categorias = [];
+		var ides = [];
+        querySnapshot.forEach(function(doc) {
+			let c = doc.data()
+			c["id"]=doc.id
+            categorias.push(c);
+        });
+		console.log("Lista de categorias en el equipo: ", categorias.join(", "));
+		that.setState({"categorias": categorias});
+
+	});
+	
+	//esta saca los articulos
+	db.collection("Teams").doc("vewwBiA8t8ReLvZ3kuYB")
+	.collection("Articulos")
+    .onSnapshot(function(querySnapshot) {
+		var articulos = [];
+		var ides = [];
+        querySnapshot.forEach(function(doc) {
+			let b = doc.data();
+			b["id"]=doc.id;
+			articulos.push(b);
+
+        });
+		that.setState({"articulos": articulos});
+
+    });
+
+
+
+
 	}
 
 	componentWillUnmount() {
-		Mousetrap.unbind(['ctrl+k'], this.toggleConsole);
+		//Mousetrap.unbind(['ctrl+k'], this.toggleConsole);
 	}
 
 
@@ -147,6 +256,8 @@ class App extends Component {
 			changeArticle={this.setActiveArticle} 
 			activeArticle={this.state.activeArticle} 
 			hiddenSidebar={this.state.hiddenSidebar}
+			categorias={this.state.categorias}
+			articulos={this.state.articulos}
 			/>}
 			/>
 			
@@ -176,9 +287,9 @@ class App extends Component {
 				</div>
 				: null
 			}
-			{(this.state.debugger)
+			{(this.state.debugger) 
 				? <div style={{backgroundColor: "#2e66cf", height: "100px",borderTop: "1px solid #dee5e8"}}>
-                {this.state.activeArticle.id}
+                {this.state.activeArticle.id + " "} 
 				</div>
 				: <div className= "test" style={{backgroundColor: "#f6f7f8", height: "100px",borderTop: "1px solid #dee5e8"}}></div>
 			}
