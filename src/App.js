@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect} from 'react-router-dom';
 import { Container, Row, Col, Input } from 'reactstrap';
 
 
@@ -20,7 +20,9 @@ import Mousetrap from 'mousetrap'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import commands from './services/commands.js';
+import {commands, commandoSelector} from './services/commands.js';
+import {catList,articleList} from './services/articuloObj';
+
 
 class App extends Component {
 
@@ -31,44 +33,35 @@ class App extends Component {
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.runCommand = this.runCommand.bind(this);
+		this.setActiveArticle = this.setActiveArticle.bind(this);
 
 		this.state = {
-			activeArticle: "articulo default",
+			activeArticle: articleList.filter((x)=> x.id==23240)[0],
 			consoleActive: false,
 			comando: "",
-			hiddenSidebar: false
+			hiddenSidebar: false,
+			debugger: true,
+			editor: false
 		};
 	}
+
 
 	notify = () => toast("Wow so easy !");
 
 	toggleConsole(evt){
 		evt.preventDefault();
 		console.log("consola abierta");
-
-		this.setState({
-			consoleActive: !this.state.consoleActive
-
-		});
-
-		this.setState({
-			comando: ""
-
-		});
-
+		this.setState({consoleActive: !this.state.consoleActive	});
+		this.setState({comando: ""});
 	}
 
-	toggleSidebar(onoff){
-
-		this.setState({
-			hiddenSidebar: onoff
-
-		});
+	toggleSidebar(onoff){this.setState({hiddenSidebar: onoff});}
+	toggleDebugger(onoff){this.setState({debugger: onoff});}
+	toggleEditor(onoff){this.setState({editor: onoff});}
 
 
-
-	}
 	commandSelector(comando){
+		
 		console.log(comando + " y "+ this.state.comando)
 		switch(comando){
 			case "sidebar:on":
@@ -77,6 +70,16 @@ class App extends Component {
 			this.toggleSidebar(true);break;
 			case "notify":
 			this.notify();break;
+			case "id":
+			toast("ID del Artículo: " + this.state.activeArticle.id,{type: toast.TYPE.INFO});break;
+			case "debug:on":
+			this.toggleDebugger(true);break;
+			case "debug:off":
+			this.toggleDebugger(false);break;
+			case "edit":
+			this.toggleEditor(true);break;
+			case "view":
+			this.toggleEditor(false);break;
 			default:
 			console.error("el comando \"" + comando + "\" no existe")
 		}
@@ -84,11 +87,10 @@ class App extends Component {
 
 	runCommand(){
 
-	const comandos = ["sidebar:on", "sidebar:off", "notify"]
-	!(comandos.indexOf(this.state.comando) > -1)
+	const commands = ["sidebar:on", "sidebar:off", "notify", "id", "debug:on", "debug:off", "edit", "view"]
+	!(commands.indexOf(this.state.comando) > -1)
 	? toast("⚠️ El comando \"" + this.state.comando + "\" no existe", {type: toast.TYPE.ERROR}) 
 	: (console.log("este comando existe"),this.commandSelector(this.state.comando))
-
 
 	}
 
@@ -102,16 +104,19 @@ class App extends Component {
 		});
 	}
 
+	setActiveArticle(articleID) {
+		this.setState({ activeArticle: articleList.filter((x)=> x.id==articleID)[0]	});
+	}
+
 	handleKeyPress(evt){
 		// console.log(evt.charCode)
-		this.state.consoleActive && evt.charCode == "13" && (this.toggleConsole(evt), console.log(this.state.comando),this.runCommand())
-		;
-
-
+		this.state.consoleActive && evt.charCode == "13" && (this.toggleConsole(evt), console.log(this.state.comando),this.runCommand());
 	}
 
 	componentDidMount() {
 		Mousetrap.bind(['ctrl+k'], this.toggleConsole);
+		console.log(this.activeArticle)
+		
 	}
 
 	componentWillUnmount() {
@@ -122,12 +127,11 @@ class App extends Component {
 
 
 	render() {
-			
 
 		return (
 			<div className="App">
 			<ToastContainer autoClose={3000}/>
-			<div className="FullHeader">
+			<div>
 			<Header />
 			<SubHeader />
 			</div>
@@ -137,9 +141,20 @@ class App extends Component {
 			<div className="App-main" >
 
 			<Switch style={{height:"80%"}}>
-			<Route exact path='/' render={()=><Main hiddenSidebar={this.state.hiddenSidebar}/>}/>
+			<Route exact path='/' render={this.state.editor ? () =><Editor
+			activeArticle={this.state.activeArticle}
+			/> : () =><Main 
+			changeArticle={this.setActiveArticle} 
+			activeArticle={this.state.activeArticle} 
+			hiddenSidebar={this.state.hiddenSidebar}
+			/>}
+			/>
+			
 			<Route  path='/login' component={Login}/>
-			<Route  path='/editor' component={Editor}/>
+			<Route  path='/editor' render={() =><Editor
+			activeArticle={this.state.activeArticle}
+			/>}/>
+
 			<Route  path='/TestField' component={TestField}/>
 			<Route  path='*' component={NotFound}/>
 			</Switch>
@@ -151,13 +166,19 @@ class App extends Component {
 			<div>
 
 			{(this.state.consoleActive)
-				? <div autoFocus={{backgroundColor: "black", height: "100px",borderTop: "1px solid #dee5e8"}}>
+				? <div autoFocus={{backgroundColor: "black", height: "100skpx",borderTop: "1px solid #dee5e8"}}>
 				<Input autoFocus className= "consola"
 				type="text" name="consola" id="consola"
 			    placeholder="Prueba un comando"
 				onKeyPress={this.handleKeyPress}
 				onChange={this.handleInputChange}
 				/>
+				</div>
+				: null
+			}
+			{(this.state.debugger)
+				? <div style={{backgroundColor: "#2e66cf", height: "100px",borderTop: "1px solid #dee5e8"}}>
+                {this.state.activeArticle.id}
 				</div>
 				: <div className= "test" style={{backgroundColor: "#f6f7f8", height: "100px",borderTop: "1px solid #dee5e8"}}></div>
 			}

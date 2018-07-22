@@ -13,6 +13,16 @@ library.add(faStroopwafel,faAngleRight)
 
 
 class SideBar extends Component {
+
+
+
+
+
+	clickedArticle(articleID) {
+		console.log("articulo con ID: "+ articleID)
+		this.props.clickedArticle(articleID)
+		}
+
   render() {
 
 	const listItems =  articleList.filter((x)=> x.grupo==catList[1].id).map(x=> <li>
@@ -23,10 +33,11 @@ class SideBar extends Component {
 								</a>
 
 		</li>)		
-	const catLista = catList.map(x=> <h4>{x.titulo}</h4>) 
+	const catLista = catList.map(x=> <h4>{x.titulo}</h4>)
+
 	const prueba =  catList.map(y=> <div key={y.id}><h4>{y.titulo}</h4> <ul>{
 		
-		articleList.filter((x)=> x.grupo==y.id).map(x=> <li key={x.id}>
+		articleList.filter((x)=> x.grupo==y.id).map(x=> <li key={x.id} onClick={() => this.clickedArticle(x.id)} >
 						<a className= "hover-azul">
 						<FontAwesomeIcon  className="floater" icon="angle-right" />
 
@@ -39,7 +50,7 @@ class SideBar extends Component {
 
     return (
 				<Container >
-					<Row>
+					<Row className="RowMain">
 						<Col   style={{
 				padding: "30px 10px 30px 10px",
 				backgroundColor: "#fbfbfb",
@@ -49,80 +60,8 @@ class SideBar extends Component {
 				<section className="Side" style={{overflow: "hidden",
 				}}> 
 				{prueba }
+				{prueba }
 
-				<h4>Categoria 1</h4>
-				<ul >
-					<li >
-						<a className= "hover-azul">
-						<FontAwesomeIcon  className="floater" icon="angle-right" />
-
-						Artículo 1
-						</a>
-						<a>
-						Artículo 2
-						</a>
-						<a>
-						<FontAwesomeIcon className="floater" icon="angle-right" />
-
-						Artículo 3 super largo y con iconito
-						</a>
-						
-
-					</li>
-				</ul>
-				<h4>Categoria 2</h4>
-				<ul>
-					<li>
-						<a>
-						<FontAwesomeIcon className="floater" icon="angle-right" />
-						Artículo 1 de nombre irrazonablemenente largo jolines
-						</a>
-						<a>
-						Artículo 2
-						</a>
-						<a>
-						Artículo 3
-						</a>
-						
-
-					</li>
-				</ul>
-									<li>Artículo 1</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2 que es super largo y tal y cual pascual</li>
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-									<h4>Categoria 1</h4>
-									<li>Artículo 1</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículoo 2 que es super largo y tal y cual pascual</li>
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-									<li>Artículo 2</li>
-									<h4>Categoria 1</h4>
-									<li>Artículo 1</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
-
-									<h4>Categoria 2</h4>
-									<li>Artículoo 2 que es super largo y tal y cual pascual</li>
-									<h4>Categoria 2</h4>
-									<li>Artículo 2</li>
 
 				</section>
 				</Col>

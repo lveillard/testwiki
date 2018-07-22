@@ -43,11 +43,14 @@ class Main extends Component {
 
 	constructor(props) {
 		super(props);
+		console.log("props"+ this.props)
 		this.state = {
 			articles: [],
 			loading: true,
+			articleID: "",
 			};
 }
+
 
 
 
@@ -56,11 +59,11 @@ class Main extends Component {
 
 		return (
 <div className="Main">
-	<Container style={{maxWidth: "1100px", padding: "0"}}>
+	<Container style={{maxWidth: "1400px", padding: "0"}}>
 		<Row className= "RowMain" > 
 			{this.props.hiddenSidebar ? null :
 			<Col 
-			sm={{size:"3"}} 
+			sm={{size:"3"}} xl="2"
 			className="d-none d-sm-block testtest" 
 			style={{
 				padding: "0px",
@@ -68,7 +71,7 @@ class Main extends Component {
 				}}
 			>
 			<ShadowScrollbars style={{height:"100%"}}>
-			<SideBar />
+			<SideBar clickedArticle={this.props.changeArticle} />
 			</ShadowScrollbars>
 
 			</Col> 
@@ -76,11 +79,12 @@ class Main extends Component {
 			
 			
 			<Col>
-			<ShadowScrollbars style={{height:"100%"}}>
+			<ShadowScrollbars style={{height:"100%"}} >
 
-			<Article />
+			<Article activeArticle={this.props.activeArticle}/>
 			</ShadowScrollbars>
 			</Col>
+			<Col xl="2" className="sidebar-R bw d-none d-xl-block" ></Col>
 
 			</Row>
 	</Container>

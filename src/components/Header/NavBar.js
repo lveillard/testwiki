@@ -34,8 +34,8 @@ export default class  extends React.Component {
 
 
 			
-        <Navbar className="fixed-top " dark expand="sm" style={{height: "56px"}} >
-          <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1100px",margin:"auto"}}>
+        <Navbar className=" " dark expand="sm" style={{}} >
+          <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1400px",margin:"auto"}}>
           <NavbarBrand className="pl-3" href="/">Test-wiki</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

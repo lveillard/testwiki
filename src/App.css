@@ -5,8 +5,6 @@
 
 .App-header {
   background-color: #2e66cf;
-  height: 80px;
-  color: white;
   z-index: 1031;
 
 }
@@ -14,13 +12,17 @@
 .Header-sub {
   background-color: #f6f7f8;
   border-bottom: 1px solid #dee5e8;
-  height: 47px;
   color: #555;
   position: fixed;
   top: 60px;
   right: 0;
   left: 0;
   z-index: 1029;
+}
+
+.sidebar-R {
+  background-color: white !important;
+
 }
 
 .Footer-top {
@@ -42,7 +44,7 @@
 
 
 .App-main {
-  margin-top: 56px;
+  margin-top: 47px;
 
 }
 

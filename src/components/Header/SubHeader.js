@@ -14,6 +14,8 @@ import {
   DropdownMenu,
   UncontrolledButtonDropdown,
   DropdownItem } from 'reactstrap';
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
   import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './Header.css';
@@ -33,14 +35,16 @@ class SubHeader extends Component {
 
   render() {
     return (
+      <div >
+      <div className="Header-sub " style={{height: "47px"}}>
 
-      <Navbar className="Header-sub py-1 pr-4" style={{maxWidth: "1100px",margin:"auto"}}  >
+      <Navbar className="Header-sub py-1 pl-0 pr-3" style={{height: "47px", maxWidth: "1400px",marginRight: "auto",marginLeft:"auto", position:"fixed", flexWrap: "nowrap"}}  >
       <div>
         <Nav>
           <NavItem className="pr-2">
           <UncontrolledButtonDropdown>
         <DropdownToggle className="button-nav-main" size="sm">
-          Large Button
+          Mundo
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem>Another Action</DropdownItem>
@@ -48,10 +52,11 @@ class SubHeader extends Component {
         </DropdownMenu>
       </UncontrolledButtonDropdown>
           </NavItem>
-
+          <FontAwesomeIcon  className="floater button-nav my-3 mr-1" style={{}} icon="angle-right" />
+      <NavItem className="pl-2 pt-2">
       <UncontrolledButtonDropdown>
         <DropdownToggle className="button-nav" size="sm">
-          Large Button
+          Vista
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem header>Mundo</DropdownItem>
@@ -60,6 +65,7 @@ class SubHeader extends Component {
           <DropdownItem>Another Action</DropdownItem>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
+      </NavItem>
         
         </Nav>
       </div>
@@ -68,12 +74,14 @@ class SubHeader extends Component {
 
       </Nav>
       <Nav className="ml-auto" navbar>
-      <form className="form-inline my-0 my-lg-0">
-          <Input className="form-control mr-sm-2" type="search" name="search" id="Buscador" placeholder="Search" />
-          <Button  style={{color:"#2980b9", borderColor:"#2980b9"}} className="hover-azul btn btn-outline-success my-2 my-sm-0 d-none d-sm-block " type="submit"> Buscar </Button>
+      <form className="form-inline  my-0 my-lg-0">
+          <Input className="form-control  mr-4" type="search" name="search" id="Buscador" placeholder="Search" className="d-none d-sm-block" />
+          <Button  style={{color:"#2980b9", borderColor:"#2980b9"}} className="hover-azul btn btn-outline-success my-2 pl-2 ml-2 d-none d-sm-block " type="submit"> Buscar </Button>
         </form>
    </Nav>
       </Navbar>
+      </div>
+      </div>
     );
   }
 }
