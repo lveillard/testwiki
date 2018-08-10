@@ -44,13 +44,13 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
 		console.log("props"+ this.props)
+
 		this.state = {
 			articles: [],
 			loading: true,
 			articleID: "",
 			};
 }
-
 
 
 
@@ -81,7 +81,11 @@ class Main extends Component {
 			<Col>
 			<ShadowScrollbars style={{height:"100%"}} >
 
-			<Article activeArticle={this.props.activeArticle}/>
+			<Article 
+			activeArticle={this.props.activeArticle}
+			updateFS= {this.props.updateFS}
+			/>
+			
 			</ShadowScrollbars>
 			</Col>
 			<Col xl="2" className="sidebar-R bw d-none d-xl-block" ></Col>

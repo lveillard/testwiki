@@ -19,7 +19,7 @@ class Header extends Component {
   render() {
     return (
       <div className="NavBar bb ">
-      <NavBar />
+      <NavBar currentTeam={this.props.currentTeam}/>
       </div>
     );
   }

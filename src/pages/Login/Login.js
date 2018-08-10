@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import './Login.css';
+import GoogleButton from 'react-google-button';
+import { auth, googleAuthProvider } from '../../firebase'
+
 
 class login extends Component {
   render() {
@@ -12,6 +15,18 @@ class login extends Component {
       <Row className="col-md-12 col-sm-12">
         <Col>
         <h3>Login</h3>
+{ this.props.user  ?
+
+        (<GoogleButton label="Sign Out" style={{marginTop: "26px",marginBottom: "26px",marginRight: "auto", marginLeft: "auto"}}  
+        onClick={( ) => auth.signOut() }/>
+        )
+
+        :
+        (<GoogleButton style={{marginTop: "26px",marginBottom: "26px",marginRight: "auto", marginLeft: "auto"}}  
+        onClick={( ) => auth.signInWithPopup(googleAuthProvider) }/>
+        )
+
+  }
           <form>
         <div className="col-sm-12 form-group">
           <input type="email" className="form-control" id="inputEmail" placeholder="Email" />
