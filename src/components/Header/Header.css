@@ -11,7 +11,6 @@
     font-size: 1rem !important;
     font-weight: 550 !important;
     opacity: 0.7;
-    padding: 11px !important;
     padding-left: 42px !important;
     padding-right: 42px !important;
     border-top-left-radius: 0px !important;
@@ -51,8 +50,8 @@
     border-color: transparent !important;
     color: #007bff !important;
     border: 0px !important;
-    font-size: 1rem !important;
-    height: 100%;
+    font-size: 0.85rem !important;
+    
 
 
 
@@ -66,9 +65,24 @@
     border-color: black !important;
     color: #007bff !important;
     border: 1px 1px 1px 1px!important;
-    font-size: 1rem !important;
+    font-size: 0.85rem !important;
     box-shadow: 0px 0px #fff,0 0 0 1px #b6c5cc !important;
     border-radius: 2px 2px 2px 2px;
     display: inline-block;
 
+}
+
+.cy {
+    display: flex;
+align-items: center;
+
+
+}
+
+.dy{
+white-space: nowrap !important;
+overflow: hidden !important;
+text-overflow: ellipsis !important;
+
+    
 }

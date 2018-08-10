@@ -36,19 +36,19 @@ export default class  extends React.Component {
 			
         <Navbar className=" " dark expand="sm" style={{}} >
           <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1400px",margin:"auto"}}>
-          <NavbarBrand className="pl-3" href="/">Test-wiki</NavbarBrand>
+          <NavbarBrand  className="mx-auto" href="/">Wikiverse</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink href="/components/">Opciones</NavLink>
               </NavItem>
-              <NavItem>
+              {/*<NavItem>
               <NavLink tag={Link} to="/login">login</NavLink>
-              </NavItem>
+              </NavItem>*/}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  {this.props.currentTeam.Name}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
@@ -59,7 +59,7 @@ export default class  extends React.Component {
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Reset
+                    LogOut
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>

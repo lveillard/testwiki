@@ -1,6 +1,8 @@
 .App {
   background-color: #fbfbfb;
   height: 100vh;
+  font-size: 0.85rem;
+
 }
 
 .App-header {
@@ -44,7 +46,7 @@
 
 
 .App-main {
-  margin-top: 47px;
+  margin-top: 35px;
 
 }
 
@@ -103,7 +105,14 @@ padding-right: 0px !important;
   background-color: white !important;
 }
 
+.editing {
+  background-color: #FFFDE7;
+}
 
+
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
 
 
 
