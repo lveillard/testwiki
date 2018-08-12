@@ -108,6 +108,18 @@ padding-right: 0px !important;
 .editing {
   background-color: #FFFDE7;
 }
+.ca {
+  color: #007bff !important;
+
+}
+
+.centerInside{
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+}
 
 
 [contenteditable]:focus {
@@ -121,4 +133,5 @@ padding-right: 0px !important;
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
 

@@ -19,6 +19,7 @@ import {
 
   import {Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import './Header.css';
+import { catList } from '../../services/articuloObj';
 
 
 
@@ -31,9 +32,26 @@ class SubHeader extends Component {
 
     };
   }
+
+  
   
 
   render() {
+
+
+    const listaCategorias = 
+    this.props.categorias.map(y => (
+      <div className="cat" key={y.id}>
+      <DropdownItem 
+      onClick={()=>
+      y.id ? 
+      this.props.updateFS(y.id, "Categoria") :
+      this.props.updateFS("","Categoria")            }>
+      {y.Nombre}</DropdownItem>
+      </div>
+    ));
+
+
     return (
       <div >
       <div className="Header-sub " style={{height: "35px"}}>
@@ -73,10 +91,7 @@ class SubHeader extends Component {
           Categoría
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem header>Mundo</DropdownItem>
-          <DropdownItem disabled>Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
+          {listaCategorias}
         </DropdownMenu>
       </UncontrolledButtonDropdown>
       </NavItem>

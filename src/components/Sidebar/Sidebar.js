@@ -6,11 +6,17 @@ import {
   faAngleRight,
   faSearch,
   faPlusSquare,
-  faAngleDown
+  faAngleDown,
+  faArrowLeft,
+  faArrowRight,
+  faEdit,
+  faTimes,
+  faSave,
+  faFile,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "./Sidebar.css";
-import { Link } from "react-router-dom";
 import { catList, articleList } from "../../services/articuloObj";
 import {
   Collapse,
@@ -21,20 +27,24 @@ import {
   Input
 } from "reactstrap";
 
-library.add(faStroopwafel, faAngleRight, faSearch, faPlusSquare, faAngleDown);
+library.add(faStroopwafel, faAngleRight, faSearch, faPlusSquare, faAngleDown, faArrowLeft,faArrowRight,faEdit,faTimes,faSave,faFile,faPlus );
 
 class SideBar extends Component {
 
 	constructor(props) {
 		super(props);
 		this.toggle = this.toggle.bind(this);
-		this.state = { collapse: false };
+		this.state = { 
+      collapse: false,
+      inputCategory: ''
+    };
 	  }
 	
 	  toggle() {
 		this.setState({ collapse: !this.state.collapse });
 	  }
 
+   
 
 
 
@@ -46,16 +56,6 @@ class SideBar extends Component {
   }
 
   render() {
-    const listItems = this.props.articulos.map(x => (
-      <li>
-        <a className="hover-azul">
-          <FontAwesomeIcon className="floater" icon="angle-right" />
-
-          {x.Titulo}
-        </a>
-      </li>
-    ));
-    const catLista = catList.map(x => <h4>{x.titulo}</h4>);
 
     const prueba = catList.map(y => (
       <div key={y.id}>
@@ -78,8 +78,10 @@ class SideBar extends Component {
 
     const pruebas = this.props.categorias.map(y => (
       <div className="cat" key={y.id}>
-        <h4>{y.Nombre}</h4>{" "}
+      <div style={{ textAlign:"center"}} ><h4 style={{display:"inline"}}>{y.Nombre}</h4>  {/*<FontAwesomeIcon style={{display:"inline"}}  className="floater mr-1 ca" style={{}} icon="plus-square" />*/}</div> 		
         <ul>
+         {/*<a className="art ca"> Nuevo artículo </a>*/}
+          
           {this.props.articulos.filter(x => x.Categoria == y.id).map(x => (
             <li
               className="art"
@@ -110,7 +112,7 @@ class SideBar extends Component {
             <section>
               <div style={{ padding: "5px 0px 0px 16px" }}>
                 <div  onClick={this.toggle} className="">
-                  <a className="art"> Nueva categoría </a>
+                  <a className="art ca"> Nueva categoría </a>
                   {/*<FontAwesomeIcon  icon="angle-down"/>*/}
                 </div>
 
@@ -120,12 +122,15 @@ class SideBar extends Component {
                       <Input
                         placeholder="sm"
                         bsSize="sm"
-						id="text"
+                        onChange={(evt) => { this.setState({inputCategory: evt.target.value })}}
+                        id="text"
                         type="text"
                         placeholder="Nombre de la categoría"
                         onKeyDown={event => {
                           if (event.key === "Enter") {
 							event.preventDefault();
+              this.setState({inputCategory:"" });
+              this.props.newCategory(this.state.inputCategory)
 							this.toggle();
                           }
                         }}

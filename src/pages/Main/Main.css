@@ -13,7 +13,7 @@
   .custom-scrollbars:hover .track{
     opacity: 1;
   }
-
+id
   .testtest{
     opacity:1;
   
@@ -24,6 +24,13 @@
   
   }
   
+  .sideBarButton {
+    position: absolute ;
+    top: 5px; 
+    left: 5px;
+    z-index: 1;
+    font-size: 1.2rem;
+    }
 
 
  

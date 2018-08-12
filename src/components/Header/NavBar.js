@@ -36,7 +36,7 @@ export default class  extends React.Component {
 			
         <Navbar className=" " dark expand="sm" style={{}} >
           <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1400px",margin:"auto"}}>
-          <NavbarBrand  className="mx-auto" href="/">Wikiverse</NavbarBrand>
+          <NavbarBrand  className="" href="/">Wikiverse</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

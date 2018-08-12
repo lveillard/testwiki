@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CKEditor from "react-ckeditor-component";
 import ckeditor from '../../../node_modules/react-ckeditor-component/lib/ckeditor';
-
+import '/config.js'
 class Ckeditor extends Component {
     constructor(props) {
         super(props);
