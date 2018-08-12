@@ -5,6 +5,8 @@ import Article from '../../components/Article/Article';
 import Footer from '../../components/Footer/Footer';
 import ShadowScrollbars from '../../components/ScrollBars/ShadowScrollbars';
 import './Main.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 import SideBar from '../../components/Sidebar/Sidebar';
 
@@ -71,7 +73,13 @@ class Main extends Component {
 				}}
 			>
 			<ShadowScrollbars style={{height:"100%"}}>
-			<SideBar clickedArticle={this.props.changeArticle} categorias={this.props.categorias} articulos={this.props.articulos} />
+			<SideBar 
+			clickedArticle={this.props.changeArticle} 
+			categorias={this.props.categorias} 
+			articulos={this.props.articulos}
+			newCategory={this.props.newCategory}
+			newArticle={this.props.newArticle}
+ />
 			</ShadowScrollbars>
 
 			</Col> 
@@ -79,11 +87,22 @@ class Main extends Component {
 			
 			
 			<Col>
+
 			<ShadowScrollbars style={{height:"100%"}} >
+			{!this.props.editor && !this.props.hiddenSidebar && <FontAwesomeIcon onClick={()=>this.props.toggleSidebar(true)} className="sideBarButton button-nav" icon="arrow-left" />}
+			{!this.props. editor && this.props.hiddenSidebar && <FontAwesomeIcon onClick={()=>this.props.toggleSidebar(false)} className="sideBarButton button-nav" icon="arrow-right" />}
+
 
 			<Article 
 			activeArticle={this.props.activeArticle}
 			updateFS= {this.props.updateFS}
+			activeEditor={this.props.activeEditor}
+            updateArticle={this.props.updateArticle}
+			toggleEditor={this.props.toggleEditor}
+			saveArticle={this.props.saveArticle}
+			deleteArticle={this.props.deleteArticle}
+
+			editor={this.props.editor}
 			/>
 			
 			</ShadowScrollbars>

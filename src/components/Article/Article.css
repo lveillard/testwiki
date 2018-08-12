@@ -16,3 +16,11 @@
     text-align: center;
 
 }
+
+.size-2 {
+    font-size: 1.2rem !important;
+}
+
+.size-2:hover {
+    font-size: 1.2rem !important;
+}
