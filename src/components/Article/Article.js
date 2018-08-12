@@ -6,6 +6,9 @@ import contentEditable from "../../services/contentEditable.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Editor from "../../pages/Editor/Editor";
 
+import { Switch, Route, Redirect } from "react-router-dom";
+
+
 
 class Article extends Component {
   constructor(props) {
@@ -35,6 +38,7 @@ class Article extends Component {
       /* el false ese es temporal */
     }
 
+
     return (
       <Container
         className="RowMain"
@@ -60,10 +64,13 @@ class Article extends Component {
                     <Row className="article-heading">
 
                     <Col xs="1" className="centerInside">
+
                      {this.props.editor && <div className="button-nav" style={{padding:"5px"}}>
                       <FontAwesomeIcon
                         onClick={()=>this.props.saveArticle()} className="size-2" icon="save" style={{color: "#28a745"}} />
                       </div>}
+
+
                       </Col>
 
                        <Col>
@@ -73,15 +80,25 @@ class Article extends Component {
                       />
                       </Col>
                       <Col xs="1" className="centerInside">
+
+
                       {!this.props.editor && <div className="button-nav" style={{padding:"5px"}}>
                       <FontAwesomeIcon
                         onClick={()=>this.props.toggleEditor(true)} className="size-2" icon="edit" />
                       </div>}
+
+                     {this.props.editor && <div className="button-nav" style={{padding:"5px"}}>
+                      <FontAwesomeIcon
+                        onClick={()=>this.props.deleteArticle()} className="size-2" icon="trash" style={{color: "#dc3545"}} />
+                      </div>}
+
                       {this.props.editor && <div className="button-nav" style={{padding:"5px"}}>
                       <FontAwesomeIcon
                         onClick={()=>this.props.toggleEditor(false)} className="size-2" icon="times" style={{color: "#dc3545"}} />
                       </div>}
                       </Col>
+
+
                     </Row>
 
                     <div className="article-meta">

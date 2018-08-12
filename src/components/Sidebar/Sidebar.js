@@ -14,6 +14,7 @@ import {
   faSave,
   faFile,
   faPlus,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "./Sidebar.css";
@@ -27,22 +28,38 @@ import {
   Input
 } from "reactstrap";
 
-library.add(faStroopwafel, faAngleRight, faSearch, faPlusSquare, faAngleDown, faArrowLeft,faArrowRight,faEdit,faTimes,faSave,faFile,faPlus );
+library.add(faStroopwafel, faAngleRight, faSearch, faPlusSquare, faAngleDown, faArrowLeft,faArrowRight,faEdit,faTimes,faSave,faFile,faPlus,faTrash  );
 
 class SideBar extends Component {
 
 	constructor(props) {
 		super(props);
-		this.toggle = this.toggle.bind(this);
+    this.toggleCat = this.toggleCat.bind(this);
+    this.toggleArt = this.toggleArt.bind(this);
+
 		this.state = { 
-      collapse: false,
-      inputCategory: ''
+      collapseCat: false,
+      collapseArt: false,
+      inputCategory: '',
+      inputArt: '',
     };
-	  }
+    }
+    
+    toggleArt() {
+      this.setState({ collapseArt: !this.state.collapseArt });
+      this.setState({ inputArticle:"" });
+      this.state.collapseCat==true && this.toggleCat()
+
+  
+      }
 	
-	  toggle() {
-		this.setState({ collapse: !this.state.collapse });
-	  }
+	  toggleCat() {
+    this.setState({ collapseCat: !this.state.collapseCat });
+    this.setState({ inputCategory:"" });
+    this.state.collapseArt==true && this.toggleArt();
+    }
+    
+
 
    
 
@@ -109,37 +126,87 @@ class SideBar extends Component {
               borderRight: "1px solid #eee"
             }}
           >
-            <section>
-              <div style={{ padding: "5px 0px 0px 16px" }}>
-                <div  onClick={this.toggle} className="">
-                  <a className="art ca"> Nueva categoría </a>
+          {/* NUEVO ARTICULO*/}
+            <section clasName="newArt">
+              <div className="button-art" style={{ padding: "5px 10px 5px 10px", marginTop: "10px" }}>
+                <div  style={{cursor: "pointer"}} onClick={this.toggleArt} className="">
+                  <FontAwesomeIcon className="ca" icon="plus-square" />
+                  <a className=" art ca" > Nuevo Artículo </a>
+                  
+
                   {/*<FontAwesomeIcon  icon="angle-down"/>*/}
                 </div>
-
-                <Collapse isOpen={this.state.collapse}>
-                  <Form inline>
-                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                  
+               
+                <Collapse  isOpen={this.state.collapseArt}>
+                  <Form  className="text-align:center" >
+                    <FormGroup style={{marginBottom:"0"}} >
+                      
                       <Input
+                        autoFocus
                         placeholder="sm"
                         bsSize="sm"
+                        value={this.state.inputArticle}
+                        onChange={(evt) => { this.setState({inputArticle: evt.target.value })}}
+                        id="text"
+                        type="text"
+                        placeholder="Nombre del articulo"
+                        style={{padding: "0rem 0.75rem"}}
+                        onKeyDown={event => {
+                          if (event.key === "Enter") {
+							event.preventDefault();
+              this.setState({inputArticle:"" });
+              this.props.newArticle(this.state.inputArticle)
+							this.toggleArt();
+                          }
+                        }}
+                      />
+                    </FormGroup>
+                  </Form>
+                </Collapse>
+                </div>  
+            </section>
+
+           {/* NUEVA CATEGORIA*/}
+            <section clasName="newCat">
+              <div className="button-art" style={{ padding: "5px 10px 5px 10px",marginBottom:"10px",cursor: "pointer" }}>
+                <div  style={{}} onClick={this.toggleCat} className="">
+                  <FontAwesomeIcon className="ca" icon="plus-square" />
+                  <a className="art ca"> Nueva categoría </a>
+                  
+
+                  {/*<FontAwesomeIcon  icon="angle-down"/>*/}
+                </div>
+                  
+               
+                <Collapse  isOpen={this.state.collapseCat}>
+                  <Form  className="text-align:center" >
+                    <FormGroup  style={{marginBottom:"0"}} >
+                      
+                      <Input
+                        autoFocus
+                        ref="component"
+                        placeholder="sm"
+                        bsSize="sm"
+                        value={this.state.inputCategory}
                         onChange={(evt) => { this.setState({inputCategory: evt.target.value })}}
                         id="text"
                         type="text"
                         placeholder="Nombre de la categoría"
+                        style={{padding: "0rem 0.75rem"}}
                         onKeyDown={event => {
                           if (event.key === "Enter") {
 							event.preventDefault();
               this.setState({inputCategory:"" });
               this.props.newCategory(this.state.inputCategory)
-							this.toggle();
+							this.toggleCat();
                           }
                         }}
                       />
                     </FormGroup>
-                    <FontAwesomeIcon icon="plus-square" />
                   </Form>
                 </Collapse>
-              </div>
+                </div>  
             </section>
 
             <section

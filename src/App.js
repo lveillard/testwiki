@@ -46,6 +46,7 @@ class App extends Component {
     this.toggleEditor = this.toggleEditor.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
     this.newCategory = this.newCategory.bind(this);
+    this.newArticle = this.newArticle.bind(this);
 
     this.state = {
       activeArticle: articleList.filter(x => x.id == 23240)[0],
@@ -73,6 +74,8 @@ class App extends Component {
       user: undefined
     };
   }
+
+
 
   updateFS(contentToBeUpdated, fieldToBeUpdated) {
     if (contentToBeUpdated.length > 0 || contentToBeUpdated=="" ) {
@@ -218,7 +221,7 @@ class App extends Component {
       "save",
       "nuevotitulo",
       "new",
-      "delete"
+      "delete",
     ];
     !(commands.indexOf(this.state.comando) > -1)
       ? toast('⚠️ El comando "' + this.state.comando + '" no existe', {
@@ -290,8 +293,8 @@ class App extends Component {
       .collection("Articulos")
       .doc(this.state.activeArticle.id)
       .delete()
-      .then(function(docRef) {
-        console.log("Document removed with ID ", docRef.id);
+      .then(function() {
+        that.toggleEditor(false);
       })
       .catch(function(error) {
         console.error("Error removing document: ", error);
@@ -315,6 +318,7 @@ class App extends Component {
 
   componentDidMount() {
     var that = this;
+    
 
     //this.updateCategories(["pepe","loli"]);
     Mousetrap.bind(["ctrl+k"], this.toggleConsole);
@@ -423,12 +427,17 @@ class App extends Component {
   }
 
   render() {
+
+ 
+
     return (
       <div className="App">
         <ToastContainer autoClose={3000} />
         <div>
           <Header 
-          currentTeam={this.state.currentTeam} />{" "}
+          currentTeam={this.state.currentTeam}
+          user={this.state.user}/>
+          
           {this.state.user && <SubHeader 
           activeArticle={this.state.activeArticle}
 			    categorias={this.state.categorias}
@@ -445,21 +454,13 @@ class App extends Component {
             }}
           >
             <Route
-              exact
-              path="/"
+              path="/doc"
               render={
-                !this.state.user
-                  ? () => <Login user={this.state.user} />
-                  // : this.state.editor
-                  : false
-                    ? () => (
-                        <Editor
-                          activeArticle={this.state.activeArticle}
-                          activeEditor={this.state.activeEditor}
-                          updateArticle={this.updateArticle}
-                        />
-                      )
-                    : () => (
+                () => (
+                !this.state.user ? (
+                  <Redirect to="/login"/>
+                ) : (
+                 
                         <Main
                           changeArticle={this.setActiveArticle}
                           activeArticle={this.state.activeArticle}
@@ -474,17 +475,42 @@ class App extends Component {
                           editor={this.state.editor}
                           saveArticle={this.saveArticle}
                           newCategory={this.newCategory}
+                          newArticle = {this.newArticle}
+                          deleteArticle = {this.deleteArticle}
 
 
 
                         />
                       )
+              
+                )
               }
+                
+            />
+
+            <Route
+              exact
+              path="/"
+              render={() => (
+                this.state.user ? (
+                  <Redirect to="/doc"/>
+                ) : (
+                  <Login user={this.state.user} />
+                ))
+
+               }
             />
 
             <Route
               path="/login"
-              render={() => <Login user={this.state.user} />}
+              render={() => (
+                this.state.user ? (
+                  <Redirect to="/doc"/>
+                ) : (
+                  <Login user={this.state.user} />
+                ))
+
+               }
             />
 
             <Route
@@ -499,6 +525,8 @@ class App extends Component {
             />
 
             <Route path="/TestField" component={TestField} />
+            
+    }
             <Route path="*" component={NotFound} />
           </Switch>
           {this.props.children}

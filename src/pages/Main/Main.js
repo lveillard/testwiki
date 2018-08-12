@@ -78,6 +78,7 @@ class Main extends Component {
 			categorias={this.props.categorias} 
 			articulos={this.props.articulos}
 			newCategory={this.props.newCategory}
+			newArticle={this.props.newArticle}
  />
 			</ShadowScrollbars>
 
@@ -99,6 +100,7 @@ class Main extends Component {
             updateArticle={this.props.updateArticle}
 			toggleEditor={this.props.toggleEditor}
 			saveArticle={this.props.saveArticle}
+			deleteArticle={this.props.deleteArticle}
 
 			editor={this.props.editor}
 			/>

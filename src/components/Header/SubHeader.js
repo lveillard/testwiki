@@ -104,7 +104,7 @@ class SubHeader extends Component {
       <NavItem>
       <form style={{flexFlow: "nowrap"}} className="form-inline">
           <Input style={{fontSize: "0.85rem", padding:"0rem .75rem"}} className="form-control" type="search" name="search" id="Buscador" placeholder="Search..." />
-          <Button  style={{color:"#2980b9", borderColor:"transparent"}} className="hover-azul btn btn-outline-success" type="submit"> 						<FontAwesomeIcon icon="search" />
+          <Button  style={{color:"#2980b9", borderColor:"transparent"}} className="hover-azul btn btn-outline-success" type="submit"> 						<FontAwesomeIcon className= "ca" icon="search" />
  </Button>
         </form>
         </NavItem>
