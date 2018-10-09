@@ -54,8 +54,8 @@ class SubHeader extends Component {
 
     return (
       <div >
-      <div className="Header-sub " style={{height: "35px"}}>
-
+      <div className="Header-sub " style={{height: "34px"}}>
+      
       <Navbar className="Header-sub py-1 pl-0 pr-3" style={{height: "35px", maxWidth: "1400px",marginRight: "auto",marginLeft:"auto", position:"fixed", flexWrap: "nowrap"}}  >
         <Nav style={{width:"80%",flexWrap: "nowrap"}}>
           {/*<NavItem className="pr-2">
@@ -68,10 +68,27 @@ class SubHeader extends Component {
           <DropdownItem>Another Action</DropdownItem>
         </DropdownMenu>
       </UncontrolledButtonDropdown>
+      <FontAwesomeIcon  className="floater button-nav my-3 mr-1" style={{}} icon="angle-right" />
+
           </NavItem>
-          <FontAwesomeIcon  className="floater button-nav my-3 mr-1" style={{}} icon="angle-right" />
       */}
       <NavItem className="pl-2 pt-2">
+      <UncontrolledButtonDropdown>
+        <DropdownToggle className="button-nav" size="sm">
+          <a>Mundo{" "}</a>
+        <FontAwesomeIcon  className="" style={{}} icon="angle-right" />
+
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem header>Mundo</DropdownItem>
+          <DropdownItem disabled>Action</DropdownItem>
+          <DropdownItem>Another Action</DropdownItem>
+          <DropdownItem>Another Action</DropdownItem>
+        </DropdownMenu>
+      </UncontrolledButtonDropdown>
+      </NavItem>
+
+            <NavItem className="pl-2 pt-2">
       <UncontrolledButtonDropdown>
         <DropdownToggle className="button-nav" size="sm">
           Vista
@@ -84,6 +101,7 @@ class SubHeader extends Component {
         </DropdownMenu>
       </UncontrolledButtonDropdown>
       </NavItem>
+
       <FontAwesomeIcon  className="floater button-nav my-3 mr-1" style={{}} icon="angle-right" />
       <NavItem className="pt-2">
       <UncontrolledButtonDropdown>

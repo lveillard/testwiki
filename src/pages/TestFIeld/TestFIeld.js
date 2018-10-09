@@ -5,6 +5,7 @@ import CKEditor from "react-ckeditor-component";
 import Qeditor from '../../components/Qeditor/Qeditor';
 import {Link} from 'react-router-dom';
 import Scrollbars from 'react-custom-scrollbars';
+import ReactQuill from "react-quill"; // ES6
 
 
 
@@ -45,8 +46,8 @@ class TestField extends Component {
         false
         ? <Loader /> 
         :   
-          false 
-          ? <Qeditor />
+          true 
+          ?  <Qeditor theme="snow" placeholder={'Write something...'}/>
           :
         <CKEditor 
               activeClass="p10" 

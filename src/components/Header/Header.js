@@ -72,17 +72,17 @@ class Header extends Component {
               
             </Nav>
             <Nav>
-            <NavItem>
-                     <UncontrolledDropdown nav inNavbar style={{maxHeight:"60px",objectFit: "contain"}}>
+
+              <UncontrolledDropdown nav inNavbar style={{maxHeight:"60px",objectFit: "contain"}}>
               <DropdownToggle nav style={{cursor: "pointer"}}>
                 
-                {this.props.user&& <img style={{height:"36.4px",borderRadius: "50%"}} src={this.props.user&&this.props.user.photoURL} alt="Italian Trulli" />}
+                {this.props.user&& <img style={{height:"36.4px",borderRadius: "50%",outline:"0"}} src={this.props.user&&this.props.user==auth.currentUser&&this.props.user.photoURL} alt="" />}
                 <DropdownMenu  right>
                 <DropdownItem  className="ca" header style={{cursor: "default",textAlign:"center"}}>
                 {this.props.user&&this.props.user.displayName}
                   </DropdownItem>
                   <DropdownItem  header style={{cursor: "default"}}>
-                {this.props.user&&this.props.user.email}
+                {this.props.user&&this.props.user==auth.currentUser&&this.props.user.email}
                   </DropdownItem>
                   <DropdownItem style={{textAlign:"center"}} onClick={( ) => auth.signOut()}>
                     Logout
@@ -90,7 +90,7 @@ class Header extends Component {
                 </DropdownMenu>
               </DropdownToggle>
                 </UncontrolledDropdown>
-                </NavItem>
+
              </Nav>
           </Collapse>
 

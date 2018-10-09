@@ -16,6 +16,7 @@ import {
   faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import {NavLink,Link} from  "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import "./Sidebar.css";
 import { catList, articleList } from "../../services/articuloObj";
@@ -27,6 +28,7 @@ import {
   Label,
   Input
 } from "reactstrap";
+
 
 library.add(faStroopwafel, faAngleRight, faSearch, faPlusSquare, faAngleDown, faArrowLeft,faArrowRight,faEdit,faTimes,faSave,faFile,faPlus,faTrash  );
 
@@ -93,7 +95,7 @@ class SideBar extends Component {
 
     //aqui la magia de firebase
 
-    const pruebas = this.props.categorias.map(y => (
+    const catyart = this.props.categorias.map(y => (
       <div className="cat" key={y.id}>
       <div style={{ textAlign:"center"}} ><h4 style={{display:"inline"}}>{y.Nombre}</h4>  {/*<FontAwesomeIcon style={{display:"inline"}}  className="floater mr-1 ca" style={{}} icon="plus-square" />*/}</div> 		
         <ul>
@@ -105,11 +107,9 @@ class SideBar extends Component {
               key={x.id}
               onClick={() => this.clickedArticle(x.id)}
             >
-              <a className="hover-azul">
-                <FontAwesomeIcon className="floater" icon="angle-right" />
+              <NavLink activeClassName="hover-azul-activo" className="hover-azul" to={"/doc/"+x.id}>                <FontAwesomeIcon className="floater" icon="angle-right" />
 
-                {x.Titulo}
-              </a>
+{x.Titulo}</NavLink>
             </li>
           ))}
         </ul>
@@ -127,7 +127,7 @@ class SideBar extends Component {
             }}
           >
           {/* NUEVO ARTICULO*/}
-            <section clasName="newArt">
+            <section className="">
               <div className="button-art" style={{ padding: "5px 10px 5px 10px", marginTop: "10px" }}>
                 <div  style={{cursor: "pointer"}} onClick={this.toggleArt} className="">
                   <FontAwesomeIcon className="ca" icon="plus-square" />
@@ -168,11 +168,11 @@ class SideBar extends Component {
             </section>
 
            {/* NUEVA CATEGORIA*/}
-            <section clasName="newCat">
+            <section className="">
               <div className="button-art" style={{ padding: "5px 10px 5px 10px",marginBottom:"10px",cursor: "pointer" }}>
                 <div  style={{}} onClick={this.toggleCat} className="">
                   <FontAwesomeIcon className="ca" icon="plus-square" />
-                  <a className="art ca"> Nueva categoría </a>
+                  <a className="art ca"> Nueva Categoría </a>
                   
 
                   {/*<FontAwesomeIcon  icon="angle-down"/>*/}
@@ -215,8 +215,7 @@ class SideBar extends Component {
                 overflow: "hidden"
               }}
             >
-              {pruebas}
-              {prueba}
+              {catyart}
             </section>
           </Col>
         </Row>

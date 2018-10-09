@@ -5,6 +5,12 @@
 
   }
 
+  .RowMain-edit{
+    height: calc(100vh - 234px);
+    max-width: 100% !important;
+  }
+
+
   .custom-scrollbars .track{
     opacity: 0;
     transition: opacity 200ms ease;
