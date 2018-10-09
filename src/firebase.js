@@ -8,8 +8,9 @@ var config = {
     databaseURL: "https://wiki-vers.firebaseio.com",
     projectId: "wiki-vers",
     storageBucket: "wiki-vers.appspot.com",
-    messagingSenderId: "618128492746"
+    timestampsInSnapShots: true
   };
+
 
 var fire = firebase.initializeApp(config);
 export const db = firebase.firestore();

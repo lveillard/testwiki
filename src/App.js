@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { Container, Row, Col, Input } from "reactstrap";
-import firebase from 'firebase'
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Input } from "reactstrap";
+import { db, auth } from "./firebase";
 
-import { BrowserRouter as router } from "react-router-dom";
 import Header from "./components/Header/Header";
 import SubHeader from "./components/Header/SubHeader";
-
-import Footer from "./components/Footer/Footer";
 
 import "./App.css";
 import NotFound from "./pages/NotFound/NotFound";
@@ -19,9 +16,7 @@ import Mousetrap from "mousetrap";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { commands, commandoSelector } from "./services/commands.js";
 import { catList, articleList } from "./services/articuloObj";
-import { db, auth, googleAuthProvider,  } from "./firebase";
 
 // https://joshpitzalis.svbtle.com/crud
 // https://engineering.flosports.tv/getting-started-with-firebase-firestore-7609e
@@ -29,6 +24,7 @@ import { db, auth, googleAuthProvider,  } from "./firebase";
 class App extends Component {
   constructor(props) {
     super(props);
+    this.db = db;
 
     this.toggleConsole = this.toggleConsole.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -49,7 +45,8 @@ class App extends Component {
     this.newArticle = this.newArticle.bind(this);
 
     this.state = {
-      activeArticle: articleList.filter(x => x.id == 23240)[0],
+      activeArticle: null,
+      activeId: null,
       activeUser: {
         Id: "rywVj7TkqkitRL8ruR3k",
         Alias: "Luiso",
@@ -65,32 +62,35 @@ class App extends Component {
       editor: false,
       categorias: [],
       articulos: [],
-      test: "claro que si tete",
       currentTeam: {
         Id: "vewwBiA8t8ReLvZ3kuYB",
         Name: "PayFit ES"
       },
       test2: "holi",
-      user: undefined
+      user: undefined,
+      defaultArticleId: "blank",
+      loading: "true",
+
     };
   }
 
-
-
   updateFS(contentToBeUpdated, fieldToBeUpdated) {
-    if (contentToBeUpdated.length > 0 || contentToBeUpdated=="" ) {
+    if (contentToBeUpdated.length > 0 || contentToBeUpdated == "") {
       var that = this;
 
-      db.collection("Teams")
+      this.db
+        .collection("Teams")
         .doc("vewwBiA8t8ReLvZ3kuYB")
         .collection("Articulos")
         .doc(this.state.activeArticle.id)
         .update({
-          ["" + fieldToBeUpdated]: contentToBeUpdated
+          ["" + fieldToBeUpdated]: contentToBeUpdated,
+          "ModifAuthor": auth.currentUser.displayName
+
         })
         .then(function() {
-          console.log("Document successfully updated!");
           that.updateArticle(contentToBeUpdated, fieldToBeUpdated);
+          console.log("Document successfully updated!");
         })
         .catch(function(error) {
           // The document probably doesn't exist.
@@ -103,12 +103,13 @@ class App extends Component {
     if (fieldToBeKilled.length > 0) {
       var that = this;
 
-      db.collection("Teams")
+      this.db
+        .collection("Teams")
         .doc("vewwBiA8t8ReLvZ3kuYB")
         .collection("Articulos")
         .doc(this.state.activeArticle.id)
         .update({
-          ["" + fieldToBeKilled]: firebase.firestore.FieldValue.delete()
+          ["" + fieldToBeKilled]: this.db.FieldValue.delete()
         })
         .then(function() {
           console.log("Document successfully updated!");
@@ -119,15 +120,24 @@ class App extends Component {
         });
     }
   }
-  
-  saveArticle(content = "holita") {
+
+  saveArticle() {
     this.state.editor == true &&
-      toast(content + "Guardado: " + this.state.activeArticle.id, {
+      toast("Guardado articulo con ID: " + this.state.activeArticle.id, {
         type: toast.TYPE.SUCCESS
       });
-    this.updateArticle(this.state.activeArticle.ContenidoTemporal, "Contenido");
-    this.updateFS(this.state.activeArticle.ContenidoTemporal, "Contenido");
-    this.toggleEditor(false);
+    this.state.editor == true &&
+      this.updateArticle(
+        this.state.activeArticle.ContenidoTemporal,
+        "Contenido"
+      );
+    this.state.editor == true &&
+      this.updateFS(this.state.activeArticle.ContenidoTemporal, "Contenido");
+    this.state.editor == true && this.toggleEditor(false);
+
+    //pruebas para el inline
+    //var testContent = window.CKEDITOR.instances["editor1"].getData();
+    //this.updateFS(testContent, "Contenido");
   }
 
   notify = () => toast("Wow so easy !");
@@ -159,7 +169,7 @@ class App extends Component {
 
   toggleEditor(onoff) {
     this.setState({ editor: onoff });
-    this.toggleSidebar(onoff)
+    this.toggleSidebar(onoff);
   }
 
   commandSelector(comando) {
@@ -221,7 +231,7 @@ class App extends Component {
       "save",
       "nuevotitulo",
       "new",
-      "delete",
+      "delete"
     ];
     !(commands.indexOf(this.state.comando) > -1)
       ? toast('⚠️ El comando "' + this.state.comando + '" no existe', {
@@ -240,7 +250,7 @@ class App extends Component {
 
   updateArticle(contentToBeUpdated, fieldToBeUpdated) {
     let jasper = Object.assign({}, this.state.activeArticle); //creating copy of object
-    jasper[fieldToBeUpdated] = contentToBeUpdated; //updating value
+    jasper[fieldToBeUpdated] = contentToBeUpdated;
     this.setState({ activeArticle: jasper });
   }
 
@@ -248,18 +258,22 @@ class App extends Component {
     var that = this;
 
     toast("Nuevo documento creado: ", { type: toast.TYPE.SUCCESS });
-    db.collection("Teams")
+    this.db
+      .collection("Teams")
       .doc("vewwBiA8t8ReLvZ3kuYB")
       .collection("Articulos")
       .add({
         Categoria: "",
         Contenido: "",
         Titulo: contentToBeUpdated,
-        ModifAuthor: that.state.activeUser.Alias
+        ModifAuthor: auth.currentUser.displayName
       })
       .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
-        that.setActiveArticle(docRef.id);
+        //that.setActiveArticle(docRef.id);
+        that.props.history.push('/doc/'+docRef.id);
+        that.setActiveArticle(docRef.id)
+        that.toggleEditor(true);
       })
       .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -270,11 +284,12 @@ class App extends Component {
     var that = this;
 
     toast("Nuevo categoría ", { type: toast.TYPE.SUCCESS });
-    db.collection("Teams")
+    this.db
+      .collection("Teams")
       .doc("vewwBiA8t8ReLvZ3kuYB")
       .collection("Categorias")
       .add({
-        Nombre: contentToBeUpdated,
+        Nombre: contentToBeUpdated
       })
       .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
@@ -288,13 +303,17 @@ class App extends Component {
     var that = this;
 
     toast("Documento eliminado: ", { type: toast.TYPE.SUCCESS });
-    db.collection("Teams")
+    this.db
+      .collection("Teams")
       .doc("vewwBiA8t8ReLvZ3kuYB")
       .collection("Articulos")
       .doc(this.state.activeArticle.id)
       .delete()
       .then(function() {
         that.toggleEditor(false);
+        that.props.history.push(that.state.defaultArticleId);
+        that.setActiveArticle(that.state.defaultArticleId)
+        console.log("holi");
       })
       .catch(function(error) {
         console.error("Error removing document: ", error);
@@ -315,24 +334,26 @@ class App extends Component {
       this.runCommand());
     //console.log(evt.charewCode);
   }
+  componentWillMount() {
+    auth.onAuthStateChanged(user => this.setState({ user }));
+  }
 
   componentDidMount() {
+
+    console.log("currentID",this.props.match.params.id)
+    // setup del user
+
     var that = this;
-    
+
+
+   
 
     //this.updateCategories(["pepe","loli"]);
     Mousetrap.bind(["ctrl+k"], this.toggleConsole);
-    console.log(this.activeArticle);
 
-    db.doc("Teams/vewwBiA8t8ReLvZ3kuYB/Articulos/gWv1GOkvqLIdUkqZ8Age")
-      .get()
-      .then(doc =>
-        this.setState({
-          test: doc.data()
-        })
-      );
-
-    db.collection("Teams")
+    // read this.db test con query
+    this.db
+      .collection("Teams")
       .where("Nombre", "==", "TestTeam")
       .get()
       .then(function(querySnapshot) {
@@ -344,38 +365,9 @@ class App extends Component {
         console.log("Error getting documents: ", error);
       });
 
-    db.collection("Teams")
-      .doc("vewwBiA8t8ReLvZ3kuYB")
-      .collection("Articulos")
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          /*console.log("Segundo nivel" + doc.id, " => ", doc.data()); */
-        });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
-      });
-
-    db.collection("Teams")
-      .doc("vewwBiA8t8ReLvZ3kuYB")
-      .onSnapshot(function(doc) {
-        console.log("Current data: ", doc.data());
-      });
-
-    db.collection("Teams")
-      .doc("vewwBiA8t8ReLvZ3kuYB")
-      .collection("Articulos")
-      .onSnapshot(function(querySnapshot) {
-        var articulos = [];
-        querySnapshot.forEach(function(doc) {
-          articulos.push(doc.data().Titulo);
-        });
-        /*console.log("Lista de articulos en el equipo: ", articulos.join(", "));*/
-      });
-
     //esta es la buena para las categorias
-    db.collection("Teams")
+    this.db
+      .collection("Teams")
       .doc("vewwBiA8t8ReLvZ3kuYB")
       .collection("Categorias")
       .onSnapshot(function(querySnapshot) {
@@ -400,185 +392,233 @@ class App extends Component {
       });
 
     //esta saca los articulos
-    db.collection("Teams")
+    this.db
+      .collection("Teams")
       .doc("vewwBiA8t8ReLvZ3kuYB")
       .collection("Articulos")
       .onSnapshot(function(querySnapshot) {
         var articulos = [];
         var ides = [];
         querySnapshot.forEach(function(doc) {
+        
           let b = doc.data();
           b["id"] = doc.id;
+          //si es el current justo, aprovechamos para actualizar
+          if(that.state.activeArticle&&b["Id"] == that.state.activeArticle.id){
+          console.log("info changed")
+            that.setState({ activeArticle: b });
+          }
           articulos.push(b);
+
         });
 
-        //ordenar alfaneticamente
+        //ordenar alfabseticamente
         let articulos2 = articulos.sort((a, b) => a.Titulo > b.Titulo);
 
         that.setState({ articulos: articulos2 });
+        
+        //Dar como cargada la pagina
+        that.setState({ loading: false });
+
+        },function(error){
+
+          console.log("error")
+
+        
+
       });
 
-    // setup del user
-    auth.onAuthStateChanged(user => this.setState({ user }));
+      
+
+    //setup del doc por defecto
+    console.log("default article", this.state.defaultArticleId);
+
+    this.db
+      .collection("Teams")
+      .doc("vewwBiA8t8ReLvZ3kuYB")
+      .collection("Config")
+      .doc("Publico")
+      .get()
+      .then(function(doc) {
+        if (doc.exists) {
+          let pubConfig = doc.data();
+          console.log("Public config data for the team: ", pubConfig);
+          let defaultArticleId = pubConfig.ArtDefault;
+          console.log("Default Article: ", defaultArticleId);
+          that.setState({ defaultArticleId: defaultArticleId });
+          that.setActiveArticle(that.state.defaultArticleId);
+
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+
   }
 
   componentWillUnmount() {
     //Mousetrap.unbind(['ctrl+k'], this.toggleConsole);
   }
-
+//
   render() {
-
- 
-
     return (
       <div className="App">
-        <ToastContainer autoClose={3000} />
-        <div>
-          <Header 
-          currentTeam={this.state.currentTeam}
-          user={this.state.user}/>
-          
-          {this.state.user && <SubHeader 
-          activeArticle={this.state.activeArticle}
-			    categorias={this.state.categorias}
-          updateFS={this.updateFS}
-          removeFieldFS={this.removeFieldFS}
-
-          />}
-        </div>
-
-        <div className="App-main">
-          <Switch
-            style={{
-              height: "80%"
-            }}
-          >
-            <Route
-              path="/doc"
-              render={
-                () => (
-                !this.state.user ? (
-                  <Redirect to="/login"/>
-                ) : (
-                 
-                        <Main
-                          changeArticle={this.setActiveArticle}
-                          activeArticle={this.state.activeArticle}
-                          hiddenSidebar={this.state.hiddenSidebar}
-                          categorias={this.state.categorias}
-                          articulos={this.state.articulos}
-                          updateFS={this.updateFS}
-                          toggleSidebar={this.toggleSidebar}
-                          toggleEditor={this.toggleEditor}
-                          activeEditor={this.state.activeEditor}
-                          updateArticle={this.updateArticle}
-                          editor={this.state.editor}
-                          saveArticle={this.saveArticle}
-                          newCategory={this.newCategory}
-                          newArticle = {this.newArticle}
-                          deleteArticle = {this.deleteArticle}
-
-
-
-                        />
-                      )
-              
-                )
-              }
-                
+        {this.state.activeArticle&&<div>
+          <ToastContainer autoClose={2000} />
+          <div>
+            <Header
+              currentTeam={this.state.currentTeam}
+              user={this.state.user}
             />
 
-            <Route
-              exact
-              path="/"
-              render={() => (
-                this.state.user ? (
-                  <Redirect to="/doc"/>
-                ) : (
-                  <Login user={this.state.user} />
-                ))
-
-               }
-            />
-
-            <Route
-              path="/login"
-              render={() => (
-                this.state.user ? (
-                  <Redirect to="/doc"/>
-                ) : (
-                  <Login user={this.state.user} />
-                ))
-
-               }
-            />
-
-            <Route
-              path="/editor"
-              render={() => (
-                <Editor
-                  activeArticle={this.state.activeArticle}
-                  activeEditor={this.state.activeEditor}
-                  updateArticle={this.updateArticle}
-                />
-              )}
-            />
-
-            <Route path="/TestField" component={TestField} />
-            
-    }
-            <Route path="*" component={NotFound} />
-          </Switch>
-          {this.props.children}
-        </div>
-
-        <div>
-          {this.state.consoleActive ? (
-            <div
-              autoFocus={{
-                backgroundColor: "black",
-                height: "100skpx",
-                borderTop: "1px solid #dee5e8"
-              }}
-            >
-              <Input
-                autoFocus
-                className="consola"
-                type="text"
-                name="consola"
-                id="consola"
-                placeholder="Prueba un comando"
-                onKeyPress={this.handleKeyPress}
-                onChange={this.handleInputChange}
+            {this.state.user && (
+              <SubHeader
+                activeArticle={this.state.activeArticle}
+                categorias={this.state.categorias}
+                updateFS={this.updateFS}
+                removeFieldFS={this.removeFieldFS}
               />
-            </div>
-          ) : null}
-          {this.state.debugger ? (
-            <div
+            )}
+          </div>
+
+          <div className="App-main">
+            <Switch
               style={{
-                backgroundColor: "#2e66cf",
-                height: "100px",
-                borderTop: "1px solid #dee5e8"
+                height: "80%"
               }}
             >
-              {this.state.activeArticle.id + " "}
-            </div>
-          ) : (
-            <div
-              className="test"
-              style={{
-                backgroundColor: "#f6f7f8",
-                height: "100px",
-                borderTop: "1px solid #dee5e8"
-              }}
-            />
-          )}
+              <Route
+                path="/doc/:id"
+                render={(props) =>
+                  !this.state.user ? (
+                    <Redirect to="/login" />
+                  ) : (
+                    <Main
+                      {...props}
+                      changeArticle={this.setActiveArticle}
+                      activeArticle={this.state.activeArticle}
+                      hiddenSidebar={this.state.hiddenSidebar}
+                      categorias={this.state.categorias}
+                      articulos={this.state.articulos}
+                      updateFS={this.updateFS}
+                      toggleSidebar={this.toggleSidebar}
+                      toggleEditor={this.toggleEditor}
+                      activeEditor={this.state.activeEditor}
+                      updateArticle={this.updateArticle}
+                      editor={this.state.editor}
+                      saveArticle={this.saveArticle}
+                      newCategory={this.newCategory}
+                      newArticle={this.newArticle}
+                      deleteArticle={this.deleteArticle}
+                      defaultArticleId={this.state.defaultArticleId}
+                    />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/doc"
+                render={(props) =>
+                  !this.state.user ? (
+                    <Redirect to="/login" />
+                  ) : (
+                    
+                    <Redirect to={"/doc/"+ this.state.defaultArticleId }/>
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/"
+                render={(props) =>
+                  this.state.user ? (
+                    <Redirect to={"/doc/"+ this.state.defaultArticleId } />
+                  ) : (
+                    <Login user={this.state.user} />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                render={() =>
+                  this.state.user ? (
+                    <Redirect to={"/doc/"+ this.state.defaultArticleId } />
+                  ) : (
+                    <Login user={this.state.user} />
+                  )
+                }
+              />
+              <Route
+                path="/editor"
+                render={() => (
+                  <Editor
+                    activeArticle={this.state.activeArticle}
+                    activeEditor={this.state.activeEditor}
+                    updateArticle={this.updateArticle}
+                  />
+                )}
+              />
+              <Route path="/TestField" component={TestField} />}
+              <Route path="*" component={NotFound} />
 
-          {/*<Footer />*/}
+            </Switch>
+            //ni idea de para que sirve esto
+            {this.props.children}
+
+          </div>
+
+          <div>
+            {this.state.consoleActive ? (
+              <div
+                style={{
+                  backgroundColor: "black",
+                  height: "100px",
+                  borderTop: "1px solid #dee5e8"
+                }}
+              >
+                <Input
+                  autoFocus
+                  className="consola"
+                  type="text"
+                  name="consola"
+                  id="consola"
+                  placeholder="Prueba un comando"
+                  onKeyPress={this.handleKeyPress}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+            ) : null}
+            {this.state.debugger ? (
+              <div
+                style={{
+                  backgroundColor: "#2e66cf",
+                  height: "100px",
+                  borderTop: "1px solid #dee5e8"
+                }}
+              >
+                {this.state.activeArticle && this.state.activeArticle.id + " "}
+              </div>
+            ) : (
+              <div
+                className="test"
+                style={{
+                  backgroundColor: "#f6f7f8",
+                  height: "100px",
+                  borderTop: "1px solid #dee5e8"
+                }}
+              />
+            )}
+
+            {/*<Footer />*/}
+          </div>
         </div>
+        }}
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App)

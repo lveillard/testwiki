@@ -87,3 +87,14 @@ text-overflow: ellipsis !important;
 
     
 }
+
+.background-header{
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: -1;
+    top: 0;
+    background: #007bff;
+    height: 100px;
+
+}

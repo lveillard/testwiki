@@ -32,7 +32,6 @@ export default function contentEditable(WrappedComponent) {
       }, () => {
 
         if (this.isValueChanged()) {
-          console.log('Value is changed', this.domElm.textContent);
           this.props.updateFS(this.domElm.textContent,"Titulo");
 
         }

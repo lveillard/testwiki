@@ -46,7 +46,7 @@ class Editor extends Component {
 
   render() {
     return (
-      <div className="RowMain">
+      <div className="RowMain-edit">
         <Scrollbars style={{ height: "100%" }}>
           <Container
             className="pt-0"
@@ -68,7 +68,7 @@ class Editor extends Component {
                 )}
 
                 {this.props.activeEditor == "CKEditor" && (
-                  <Container className="RowMain mx-0 px-0">
+                  <Container className="RowMain-edit mx-0 px-0">
                     <Row>
                       <Col>
                         <CKEditor
@@ -89,32 +89,101 @@ class Editor extends Component {
                               "Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Anchor,Subscript,addFile,Image,About,SpecialChar,Indent,Outdent,Source,Form,Checkbox,Radio,Textarea,TextField,Select,Button,ImageButton,HiddenField,SelectAll,Font",
                             removeDialogTabs: "link:advanced",
                             removePlugins:
-                              "elementspath,wsc,scayt,newpage,preview,templates,find,print,bidi,language,flash,iframe,smiley,pagebreak,div,showblocks",
-                            contentsCss: [
+                              "elementspath,wsc,scayt,newpage,preview,templates,find,print,bidi,language,flash,iframe,smiley,pagebreak,showblocks",
+                            contentsCss: ['.cke_editable{padding: 10px}',' .ul {margin-bottom: "0px" !important;',
                               "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
-                              "https://firebasestorage.googleapis.com/v0/b/wiki-vers.appspot.com/o/Ckeditor%2Fcontents.css?alt=media&token=81f275c9-5bd9-4775-81f8-050b16ee061d"
                             ],
                             allowedContent: true,
-                            height: "calc(100vh - 380px)",
                             resize_enabled: false,
+                            height: "calc(100vh - 330px)",
 
                             stylesSet: [
                               { name: "Strong Emphasis", element: "strong" },
                               { name: "Emphasis", element: "em" },
                               {
-                                name: "Blue Title",
+                                name: "Normal content",
                                 element: "p",
                                 styles: {
                                   /*'color': 'Blue'*/
                                 },
                                 attributes: {
-                                  class: "alert alert-primary mb-2 pt-2"
-                                }
-                              },
+                                  class: ""
+                                },},
                               {
-                                name: "Red Title",
+                                name: "primary box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-primary mb-2 pt-2"
+                                },},
+                                {
+                                name: "secondary gray",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-secondary mb-2 pt-2"
+                                },},
+                                {
+                                name: "success box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-success mb-2 pt-2"
+                                },},
+                                {
+                                name: "danger box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-danger mb-2 pt-2"
+                                },},
+                                {
+                                name: "warning box",
                                 element: "p",
-                                styles: { color: "Red", background: "#eeeeee" }
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-warning mb-2 pt-2"
+                                },},
+                                {
+                                name: "Info box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-info mb-2 pt-2"
+                                },},
+                                {
+                                name: "ligth box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-light mb-2 pt-2"
+                                },},
+                                {
+                                name: "dark box",
+                                element: "div",
+                                styles: {
+                                  /*'color': 'Blue'*/
+                                },
+                                attributes: {
+                                  class: "alert alert-dark mb-2 pt-2"
+                                },
+                                
+
+
                               },
                               { name: "Typewriter", element: "tt" },
                               {
@@ -133,12 +202,7 @@ class Editor extends Component {
                       </Col>
                     </Row>
 
-                    <Row>
-                      <Col>
-                        <br />
-                        {/*<div dangerouslySetInnerHTML={{ __html: this.state.content }} />*/}
-                      </Col>
-                    </Row>
+
                   </Container>
                 )}
               </Col>
