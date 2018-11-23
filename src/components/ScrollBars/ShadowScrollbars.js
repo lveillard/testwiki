@@ -49,12 +49,16 @@ class ShadowScrollbars extends Component {
             height: 10,
             background: 'linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%)'
         };
+        
         return (
-            <div style={containerStyle}>
+            <div className="custom-scrollbars" style={containerStyle}>
+                
                 <Scrollbars
                     autoHide
                     autoHideTimeout={300}
                     autoHideDuration={1000}
+                    renderTrackVertical={props => <div {...props} className="track-vertical"/>}
+                    renderThumbVertical={props => <div {...props} className="thumb-vertical"/>}
                     ref="scrollbars"
                     onUpdate={this.handleUpdate}
                     {...props}/>

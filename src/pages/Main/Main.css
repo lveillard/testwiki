@@ -10,16 +10,30 @@
     max-width: 100% !important;
   }
 
-
-  .custom-scrollbars .track{
-    opacity: 0;
-    transition: opacity 200ms ease;
-  }
   
-  .custom-scrollbars:hover .track{
-    opacity: 1;
-  }
-id
+
+
+  .thumb-vertical {
+
+    position: relative;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border-radius: inherit;
+    border: 1px solid #BFBFBF;
+    background-color: #007bff;
+    height: 10px;
+  opacity: 1 }
+
+    .track-vertical {
+      position: absolute;
+      width: 6px;
+      right: 2px;
+      bottom: 2px;
+      top: 2px;
+      border-radius: 3px;
+      background: #BFBFBF; }
+
   .testtest{
     opacity:1;
   
