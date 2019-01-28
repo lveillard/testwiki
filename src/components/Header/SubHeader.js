@@ -56,7 +56,7 @@ class SubHeader extends Component {
       <div >
       <div className="Header-sub " style={{height: "34px"}}>
       
-      <Navbar className="Header-sub py-1 pl-0 pr-3" style={{height: "35px", maxWidth: "1400px",marginRight: "auto",marginLeft:"auto", position:"fixed", flexWrap: "nowrap"}}  >
+      <Navbar className="Header-sub py-1 pl-0 pr-3" style={{height: "35px", maxWidth: "2000px",marginRight: "auto",marginLeft:"auto", position:"fixed", flexWrap: "nowrap"}}  >
         <Nav style={{width:"80%",flexWrap: "nowrap"}}>
           {/*<NavItem className="pr-2">
           <UncontrolledButtonDropdown>

@@ -50,7 +50,7 @@ class Editor extends Component {
         <Scrollbars style={{ height: "100%" }}>
           <Container
             className="pt-0"
-            style={{ maxWidth: "1400px", width: "100%" }}
+            style={{ maxWidth: "2000px", width: "100%" }}
           >
             <Row style={{ padding: "0" }}>
               <Col>
