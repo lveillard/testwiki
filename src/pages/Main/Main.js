@@ -83,7 +83,7 @@ componentWillMount(){
 		return (
 <div className="Main">
 	
-	{<Container style={{maxWidth: "1400px", padding: "0"}}>
+	{<Container style={{maxWidth: "2000px", padding: "0"}}>
 		<Row className= "RowMain" > 
 			{this.props.hiddenSidebar ? null :
 			<Col 

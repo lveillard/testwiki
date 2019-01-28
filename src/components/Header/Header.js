@@ -39,7 +39,7 @@ class Header extends Component {
 
         <Navbar className=" " dark expand="sm" style={{}} >
  
-          <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "1400px",margin:"auto"}}>
+          <Navbar className="fixed-top " dark expand="sm" style={{maxWidth: "2000px",margin:"auto"}}>
           <NavbarBrand  className="" href="/">Wikiverse</NavbarBrand>
 
           <NavbarToggler onClick={this.toggle} />
